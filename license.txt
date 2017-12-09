@@ -1,0 +1,9 @@
+Soldier:
+- https://www.assetstore.unity3d.com/en/#!/content/85702
+
+
+Bullet:
+- https://www.assetstore.unity3d.com/en/#!/content/67810
+
+Monster:
+- https://www.assetstore.unity3d.com/en/#!/content/30232

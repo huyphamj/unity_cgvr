@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-	public int moveSpeed = 10;
 	public GameObject bullet;
 	public GameObject bulletPosition;
-	public const float ATTACK_SPEED = 0.5f;
 
-	private bool isMoving = false;
 	private Animator anim;
-	private float atkCooldown = 0.5f;
+	private float atkCooldown = Config.PLAYER_ATTACK_SPEED;
 
 	// Use this for initialization
 	void Start () {
@@ -19,86 +16,44 @@ public class PlayerController : MonoBehaviour {
 
 	void Update()
 	{
+		/*int degree = 0;
+		isMoving = false;
+*/
 		atkCooldown -= Time.deltaTime;
-		int degree = 0;
-		isMoving = false;
-		float hVal = Input.GetAxis("Horizontal");
-		float vVal = Input.GetAxis("Vertical");
 
-		if(hVal > 0 || hVal< 0) 
-		{
-			if (hVal < 0)
-				degree = 270;
-			else
-				degree = 90;
-			isMoving = true;
-			transform.localEulerAngles = new Vector3(0, degree, 0);
-			this.transform.Translate(0, 0, Mathf.Abs(hVal / moveSpeed));
-		}
-		if (vVal< 0 || vVal> 0)
-		{
-			if (vVal > 0)
-				degree = 0;
-			else
-				degree = 180;
-			isMoving = true;
-			transform.localEulerAngles = new Vector3(0, degree, 0);
-			this.transform.Translate(0, 0, Mathf.Abs(vVal / moveSpeed));
-		}
-		anim.SetBool("isMoving", isMoving);
+		Vector3 mouseLocation = Input.mousePosition;
+		anim.SetBool("isMoving", false);
+		transform.eulerAngles = new Vector3(0, MyUtils.calculatePlayerRotate(mouseLocation.x, mouseLocation.y, Screen.width, Screen.height), 0);
 
-		if (Input.GetKey(KeyCode.Space) && atkCooldown < 0)
+		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
 		{
-			atkCooldown = ATTACK_SPEED;
-			Instantiate(bullet, bulletPosition.transform.position, Quaternion.identity);
+			anim.SetBool("isMoving", true);
+			Vector3 a;
+			if(Input.GetKey(KeyCode.W))
+				a = new Vector3(transform.position.x, transform.position.y, transform.position.z + Config.PLAYER_MOVE_SPEED);
+			else
+				a = new Vector3(transform.position.x, transform.position.y, transform.position.z - Config.PLAYER_MOVE_SPEED);
+			transform.position= a;
+		}
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+		{
+			anim.SetBool("isMoving", true);
+			Vector3 a;
+			if(Input.GetKey(KeyCode.D))
+				a = new Vector3(transform.position.x + Config.PLAYER_MOVE_SPEED, transform.position.y, transform.position.z);
+			else
+				a = new Vector3(transform.position.x - Config.PLAYER_MOVE_SPEED, transform.position.y, transform.position.z);
+			transform.position= a;
+		}
+
+		if (Input.GetMouseButtonDown(0) && atkCooldown < 0)
+		{
+			attack ();
 		}
 	}
-	
-	// Update is called once per frame
-	/*
-	void Update () {
-		int hDegree = 0;
-		int vDegree = 0;
-		int numberOfKeyPressed = 0;
-		isMoving = false;
-		float hVal = Input.GetAxis("Horizontal");
-		float vVal = Input.GetAxis("Vertical");
 
-		if(hVal > 0 || hVal < 0) 
-		{
-			if (hVal < 0)
-				//left = true;
-				hDegree = -90;
-			else
-				//right = true;
-				hDegree = 90;
-			numberOfKeyPressed = 1;
-			isMoving = true;
-			//this.transform.Translate(0, 0, Mathf.Abs(hVal / moveSpeed));
-		}
-		if (vVal < 0 || vVal > 0)
-		{
-			if (vVal > 0)
-				vDegree += 0;
-			else
-				//down = true;
-				vDegree += 180;
-			isMoving = true;
-			numberOfKeyPressed++;
-			if (numberOfKeyPressed > 2)
-				numberOfKeyPressed = 2;
-			//this.transform.Translate(0, 0, Mathf.Abs(vVal / moveSpeed));
-		}
-		anim.SetBool("isMoving", isMoving);
-		if (isMoving)
-		{
-			int degree = hDegree + vDegree;
-			int angle = degree / numberOfKeyPressed;
-			if (angle == 45 && hDegree < 0)
-				angle = 225;
-			transform.localEulerAngles = new Vector3(0, angle, 0);
-			this.transform.Translate(0, 0, Mathf.Abs(Mathf.Abs(vVal / moveSpeed) > 0 ? vVal / moveSpeed : hVal / moveSpeed));
-		}
+	private void attack(){
+		atkCooldown = Config.PLAYER_ATTACK_SPEED;
+		Instantiate (bullet, bulletPosition.transform.position, Quaternion.identity);
 	}
-	*/
 }

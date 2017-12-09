@@ -3,45 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieNormal : MonoBehaviour {
-
 	private Animator anim;
-	private int hp = 3;
-	// Use this for initialization
+	private int hp = Config.ZOMBIE_NORMAL_HP;
+	private float attackTime = Config.ZOMBIE_NORMAL_ATTACK_TIME;
+	private PlayerController player;
+
 	void Start () {
 		anim = GetComponent<Animator>();
+		anim.SetBool(Constant.ZOMBIE_ANIM_WALKING, true);
+		player = FindObjectOfType<PlayerController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		anim.SetBool("isWalking", true);
+		if(anim.GetBool(Constant.ZOMBIE_ANIM_DEAD))
+			return;
+		attackTime -= Time.deltaTime;
+		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
+
+		float degree = MyUtils.calculateZombieRotate (player.transform.position.x, player.transform.position.z, transform.position.x, transform.position.z);
+		transform.eulerAngles = new Vector3(0, degree, 0);
+
+		float distance = MyUtils.calculateDistance (this.transform.position, player.transform.position);
+		if (distance < Config.ZOMBIE_NORMAL_ATTACK_RANGE)
+			attack ();
+		else
+			chasePlayer ();
 	}
 
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.tag.Equals("Bullet"))
-		{
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag.Equals("Bullet")) {
 			Bullet bullet = other.gameObject.GetComponent<Bullet>();
 			hp -= bullet.getDamage();
-			if (hp < 1)
-			{
-				Debug.Log("abc");
-				//anim.SetBool("isWalking", false);
-				anim.SetBool("isDead", true);
+			if (hp < 1) {
+				anim.SetBool(Constant.ZOMBIE_ANIM_DEAD, true);
 				Destroy(GetComponent<Rigidbody>());
 				Destroy(GetComponent<Collider>());
-				this.Invoke("DestroyZombie",2.0f);
+				this.Invoke("DestroyZombie", Config.ZOMBIE_DESTROY_TIME);
 			}
 			Destroy(other.gameObject);
 		}
 	}
 
-	void OnCollisionEnter(Collision other)
-	{
-		Debug.Log("onCollisionEnterZombie");
+	void chasePlayer(){
+		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
+		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
+		transform.Translate (new Vector3(0, 0, Config.ZOMBIE_MOVE_SPEED));
 	}
 
-	void DestroyZombie()
-	{
+	void attack(){
+		if (attackTime < 0) {
+			anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, false);
+			anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, true);
+			attackTime = Config.ZOMBIE_NORMAL_ATTACK_TIME;
+		}
+	}
+
+	void OnCollisionEnter(Collision other){
+	}
+
+	void DestroyZombie(){
 		Destroy(this.gameObject);
 	}
 }
