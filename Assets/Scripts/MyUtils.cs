@@ -33,4 +33,12 @@ public class MyUtils{
 		return deg;
 	}
 
+	public static int getMonsterDamageByTag(string tag){
+		if (tag.Equals (Constant.TAG_SKELETON_SWORD))
+			return Config.SKELETON_DAMAGE;
+		else if (tag.Equals (Constant.TAG_ZOMBIE_BULLET))
+			return Config.ZOMBIE_DAMAGE;
+		else
+			return 0;
+	}
 }

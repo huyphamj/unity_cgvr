@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject bullet;
 	public GameObject bulletPosition;
 
+	private int hp = 10;
 	private Animator anim;
 	private float atkCooldown = Config.PLAYER_ATTACK_SPEED;
 
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour {
 			transform.position= a;
 		}
 
-		if (Input.GetMouseButtonDown(0) && atkCooldown < 0)
+		if (Input.GetMouseButton(0) && atkCooldown < 0)
 		{
 			attack ();
 		}
@@ -55,5 +56,14 @@ public class PlayerController : MonoBehaviour {
 	private void attack(){
 		atkCooldown = Config.PLAYER_ATTACK_SPEED;
 		Instantiate (bullet, bulletPosition.transform.position, Quaternion.identity);
+	}
+
+	void OnTriggerEnter(Collider other){
+		int damageTaken = MyUtils.getMonsterDamageByTag (other.gameObject.tag);
+		hp -= damageTaken;
+	}
+
+	public int getHp(){
+		return this.hp;
 	}
 }

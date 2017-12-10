@@ -32,14 +32,14 @@ public class ZombieNormal : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag.Equals("Bullet")) {
+		if (other.gameObject.tag.Equals(Constant.TAG_BULLET)) {
 			Bullet bullet = other.gameObject.GetComponent<Bullet>();
 			hp -= bullet.getDamage();
 			if (hp < 1) {
 				anim.SetBool(Constant.ZOMBIE_ANIM_DEAD, true);
 				Destroy(GetComponent<Rigidbody>());
 				Destroy(GetComponent<Collider>());
-				this.Invoke("DestroyZombie", Config.ZOMBIE_DESTROY_TIME);
+				this.Invoke("DestroyZombie", Config.MONSTER_DESTROY_TIME);
 			}
 			Destroy(other.gameObject);
 		}

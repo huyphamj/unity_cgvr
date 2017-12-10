@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - Skeleton_Sword
+  - Zombie_Bullet
   layers:
   - Default
   - TransparentFX
