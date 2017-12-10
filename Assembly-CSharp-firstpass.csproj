@@ -61,6 +61,7 @@
      <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\WaterBase.cs" />
      <Compile Include="Assets\Standard Assets\Environment\Water\Water\Scripts\WaterTile.cs" />
      <None Include="Assets\3D Models\Props\Weapons\Ammunition\ReadMe.txt" />
+     <None Include="Assets\Fantasy Monster(wizard) Demo\READ ME(wizard)\character setup guide link.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\Brick Substance\Documentation\Help.txt" />
      <None Include="Assets\SkeletonDemo\UserGuide.txt" />

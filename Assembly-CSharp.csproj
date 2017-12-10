@@ -51,6 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Fantasy Monster(wizard) Demo\Environment\Scripts\CamCTRLDemo.cs" />
+     <Compile Include="Assets\Fantasy Monster(wizard) Demo\Environment\Scripts\MoveCTRLDemo.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Config.cs" />
@@ -59,8 +61,11 @@
      <Compile Include="Assets\Scripts\MyUtils.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Skeleton.cs" />
+     <Compile Include="Assets\Scripts\Summon.cs" />
+     <Compile Include="Assets\Scripts\Wizard.cs" />
      <Compile Include="Assets\Scripts\ZombieNormal.cs" />
      <None Include="Assets\3D Models\Props\Weapons\Ammunition\ReadMe.txt" />
+     <None Include="Assets\Fantasy Monster(wizard) Demo\READ ME(wizard)\character setup guide link.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\Brick Substance\Documentation\Help.txt" />
      <None Include="Assets\SkeletonDemo\UserGuide.txt" />

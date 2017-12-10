@@ -36,6 +36,8 @@ public class MyUtils{
 	public static int getMonsterDamageByTag(string tag){
 		if (tag.Equals (Constant.TAG_SKELETON_SWORD))
 			return Config.SKELETON_DAMAGE;
+		else if(tag.Equals (Constant.TAG_SUMMON_SWORD))
+			return Config.SUMMON_DAMAGE;
 		else if (tag.Equals (Constant.TAG_ZOMBIE_BULLET))
 			return Config.ZOMBIE_DAMAGE;
 		else

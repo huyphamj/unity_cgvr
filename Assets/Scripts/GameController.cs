@@ -7,7 +7,10 @@ public class GameController : MonoBehaviour {
 	public GameObject eastGate;
 	public GameObject northGate;
 	public GameObject southGate;
+
 	public GameObject zombie;
+	public GameObject skeleton;
+	public GameObject wizard;
 	public PlayerController player;
 
 	private float genTime = 0;
@@ -47,16 +50,23 @@ public class GameController : MonoBehaviour {
 			ob = southGate;
 			break;
 		}
-		//Transform[] allChildren = ob.GetComponentInChildren<Transform>();
 		Vector3 pos = new Vector3();
 		foreach (Transform child in ob.transform) {
 			if (child.gameObject.name.Equals ("ZombieSpawnPoint"))
 				pos = child.transform.position;
 		}
-		Instantiate (zombie, pos, Quaternion.identity);
+		GameObject clone = null;
+		rand = Random.Range (1, 4);
+		if (rand == 1)
+			clone = zombie;
+		else if (rand == 2)
+			clone = skeleton;
+		else if (rand == 3)
+			clone = wizard;
+		Instantiate (clone, pos, Quaternion.identity);
 	}
 	
 	private void endGame(){
-		
+		Debug.Log ("GAME OVER");
 	}
 }

@@ -7,6 +7,8 @@ TagManager:
   - Bullet
   - Skeleton_Sword
   - Zombie_Bullet
+  - Wizard_Bullet
+  - Summon_Sword
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Player
+  - Monster
+  - Wizard
   - 
   - 
   - 

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ZombieNormal : MonoBehaviour {
 	private Animator anim;
+	private PlayerController player;
+
 	private int hp = Config.ZOMBIE_NORMAL_HP;
 	private float attackTime = Config.ZOMBIE_NORMAL_ATTACK_TIME;
-	private PlayerController player;
+	private float delayAfterAttack = Config.ZOMBIE_DELAY_AFTER_ATTACK;
 
 	void Start () {
 		anim = GetComponent<Animator>();
@@ -19,6 +21,7 @@ public class ZombieNormal : MonoBehaviour {
 		if(anim.GetBool(Constant.ZOMBIE_ANIM_DEAD))
 			return;
 		attackTime -= Time.deltaTime;
+		delayAfterAttack -= Time.deltaTime;
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
 
 		float degree = MyUtils.calculateZombieRotate (player.transform.position.x, player.transform.position.z, transform.position.x, transform.position.z);
@@ -48,7 +51,9 @@ public class ZombieNormal : MonoBehaviour {
 	void chasePlayer(){
 		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
-		transform.Translate (new Vector3(0, 0, Config.ZOMBIE_MOVE_SPEED));
+		if (delayAfterAttack < 0) {
+			transform.Translate (new Vector3 (0, 0, Config.ZOMBIE_MOVE_SPEED));
+		}
 	}
 
 	void attack(){
@@ -56,6 +61,7 @@ public class ZombieNormal : MonoBehaviour {
 			anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, false);
 			anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, true);
 			attackTime = Config.ZOMBIE_NORMAL_ATTACK_TIME;
+			delayAfterAttack = Config.ZOMBIE_DELAY_AFTER_ATTACK;
 		}
 	}
 

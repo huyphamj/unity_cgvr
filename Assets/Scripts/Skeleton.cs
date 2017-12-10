@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Skeleton : MonoBehaviour {
 	private Animator anim;
+	private PlayerController player;
+
 	private int hp = Config.SKELETON_HP;
 	private float attackTime = Config.SKELETON_ATTACK_TIME;
-	private PlayerController player;
+	private float delayAfterAttack = Config.SKELETON_DELAY_AFTER_ATTACK;
 
 	void Start () {
 		anim = GetComponent<Animator>();
@@ -19,6 +21,7 @@ public class Skeleton : MonoBehaviour {
 		if(anim.GetBool(Constant.ZOMBIE_ANIM_DEAD))
 			return;
 		attackTime -= Time.deltaTime;
+		delayAfterAttack -= Time.deltaTime;
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
 
 		float degree = MyUtils.calculateZombieRotate (player.transform.position.x, player.transform.position.z, transform.position.x, transform.position.z);
@@ -46,9 +49,12 @@ public class Skeleton : MonoBehaviour {
 	}
 
 	void chasePlayer(){
+		//swordCollider.enabled = false;
 		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
-		transform.Translate (new Vector3(0, 0, - Config.SKELETON_MOVE_SPEED));
+		if (delayAfterAttack < 0) {
+			transform.Translate (new Vector3 (0, 0, -Config.SKELETON_MOVE_SPEED));
+		}
 	}
 
 	void attack(){
@@ -56,6 +62,7 @@ public class Skeleton : MonoBehaviour {
 			anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, false);
 			anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, true);
 			attackTime = Config.SKELETON_ATTACK_TIME;
+			delayAfterAttack = Config.SKELETON_DELAY_AFTER_ATTACK;
 		}
 	}
 
