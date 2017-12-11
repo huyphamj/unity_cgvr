@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieNormal : MonoBehaviour {
+	public GameObject zombieBullet;
+	public Transform bulletPosion;
+
 	private Animator anim;
 	private PlayerController player;
 
@@ -52,7 +55,8 @@ public class ZombieNormal : MonoBehaviour {
 		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
 		if (delayAfterAttack < 0) {
-			transform.Translate (new Vector3 (0, 0, Config.ZOMBIE_MOVE_SPEED));
+			//transform.Translate (new Vector3 (0, 0, Config.ZOMBIE_MOVE_SPEED));
+			GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 10);
 		}
 	}
 
@@ -60,6 +64,9 @@ public class ZombieNormal : MonoBehaviour {
 		if (attackTime < 0) {
 			anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, false);
 			anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, true);
+			Quaternion q = transform.rotation;
+			Instantiate (zombieBullet, bulletPosion.position, q);
+
 			attackTime = Config.ZOMBIE_NORMAL_ATTACK_TIME;
 			delayAfterAttack = Config.ZOMBIE_DELAY_AFTER_ATTACK;
 		}

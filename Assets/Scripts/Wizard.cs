@@ -12,7 +12,7 @@ public class Wizard : MonoBehaviour {
 	private PlayerController player;
 
 	private int hp = Config.WIZARD_HP;
-	private float attackTime = Config.WIZARD_ATTACK_TIME;
+	private float attackTime = 0;
 	private float delayAfterAttack = Config.WIZARD_DELAY_AFTER_ATTACK;
 
 	void Start () {
@@ -22,6 +22,8 @@ public class Wizard : MonoBehaviour {
 	}
 
 	// Update is called once per frame
+	//void Update(){
+	//}
 	void Update () {
 		if(anim.GetBool(Constant.ZOMBIE_ANIM_DEAD))
 			return;

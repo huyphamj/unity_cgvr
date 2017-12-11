@@ -55,18 +55,30 @@ public class GameController : MonoBehaviour {
 			if (child.gameObject.name.Equals ("ZombieSpawnPoint"))
 				pos = child.transform.position;
 		}
+
 		GameObject clone = null;
-		rand = Random.Range (1, 4);
-		if (rand == 1)
-			clone = zombie;
-		else if (rand == 2)
+		rand = Random.Range (1, 101);
+		switch (MyUtils.getMonsterWithPercent (rand)) {
+		case 1:
 			clone = skeleton;
-		else if (rand == 3)
+			break;
+		case 2:
+			clone = zombie;
+			break;
+		case 3:
 			clone = wizard;
+			break;
+		default:
+			break;
+		}
 		Instantiate (clone, pos, Quaternion.identity);
 	}
 	
 	private void endGame(){
 		Debug.Log ("GAME OVER");
+	}
+
+	public void playerGetItem(){
+		Debug.Log ("getitem");
 	}
 }

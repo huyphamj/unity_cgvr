@@ -29,12 +29,13 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
 		{
 			anim.SetBool("isMoving", true);
-			Vector3 a;
+			GetComponent<Rigidbody> ().velocity = new Vector3 (10, 0, 10);
+			/*Vector3 a;
 			if(Input.GetKey(KeyCode.W))
 				a = new Vector3(transform.position.x, transform.position.y, transform.position.z + Config.PLAYER_MOVE_SPEED);
 			else
 				a = new Vector3(transform.position.x, transform.position.y, transform.position.z - Config.PLAYER_MOVE_SPEED);
-			transform.position= a;
+			transform.position= a;*/
 		}
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
 		{

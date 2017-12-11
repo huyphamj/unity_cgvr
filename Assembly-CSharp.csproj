@@ -57,12 +57,14 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Config.cs" />
      <Compile Include="Assets\Scripts\Constant.cs" />
+     <Compile Include="Assets\Scripts\Crates.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\MyUtils.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Skeleton.cs" />
      <Compile Include="Assets\Scripts\Summon.cs" />
      <Compile Include="Assets\Scripts\Wizard.cs" />
+     <Compile Include="Assets\Scripts\ZombieBullet.cs" />
      <Compile Include="Assets\Scripts\ZombieNormal.cs" />
      <None Include="Assets\3D Models\Props\Weapons\Ammunition\ReadMe.txt" />
      <None Include="Assets\Fantasy Monster(wizard) Demo\READ ME(wizard)\character setup guide link.txt" />

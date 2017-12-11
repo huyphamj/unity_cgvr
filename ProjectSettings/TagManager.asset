@@ -9,6 +9,7 @@ TagManager:
   - Zombie_Bullet
   - Wizard_Bullet
   - Summon_Sword
+  - Item
   layers:
   - Default
   - TransparentFX

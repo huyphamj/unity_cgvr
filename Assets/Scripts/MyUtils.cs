@@ -43,4 +43,12 @@ public class MyUtils{
 		else
 			return 0;
 	}
+
+	public static int getMonsterWithPercent (int percent){
+		if (percent > Config.GENERATE_PERCENT_SKELETON + Config.GENERATE_PERCENT_ZOMBIE)
+			return 3;
+		if (percent > Config.GENERATE_PERCENT_SKELETON)
+			return 2;
+		return 1;
+	}
 }

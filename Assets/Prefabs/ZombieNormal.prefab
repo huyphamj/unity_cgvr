@@ -105,6 +105,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1200775657859976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4332863183816190}
+  m_Layer: 9
+  m_Name: BulletPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1206517950649010
 GameObject:
   m_ObjectHideFlags: 1
@@ -938,6 +953,19 @@ Transform:
   m_Father: {fileID: 4595852380946868}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4332863183816190
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1200775657859976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.018, y: 0.963, z: 0.624}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4595852380946868}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4354616209837906
 Transform:
   m_ObjectHideFlags: 1
@@ -1068,7 +1096,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1759960053128548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 123.924324, y: 0, z: 54.724503}
+  m_LocalPosition: {x: 77.45092, y: 0, z: 54.09155}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4630779999069708}
@@ -1089,6 +1117,7 @@ Transform:
   - {fileID: 4032880574407768}
   - {fileID: 4903383162590010}
   - {fileID: 4743737603816336}
+  - {fileID: 4332863183816190}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1393,6 +1422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 908b1dc8bd4aa4c3c8946b8d782d8914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zombieBullet: {fileID: 1762592050230480, guid: 555a6c4c52a661c47bbc8fa29dd0b97d,
+    type: 2}
+  bulletPosion: {fileID: 4332863183816190}
 --- !u!137 &137016879144717396
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

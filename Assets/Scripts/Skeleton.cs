@@ -17,7 +17,12 @@ public class Skeleton : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update(){
+		GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 5);
+	}
+	//void Update () {
+	//	transform.Translate (a);
+		/*
 		if(anim.GetBool(Constant.ZOMBIE_ANIM_DEAD))
 			return;
 		attackTime -= Time.deltaTime;
@@ -31,8 +36,8 @@ public class Skeleton : MonoBehaviour {
 		if (distance < Config.SKELETON_ATTACK_RANGE)
 			attack ();
 		else
-			chasePlayer ();
-	}
+			chasePlayer ();*/
+	//}
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag.Equals("Bullet")) {
