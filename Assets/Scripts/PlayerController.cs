@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour {
 	public GameObject bullet;
 	public GameObject bulletPosition;
 
-	private int hp = 10;
+	private int hp = Config.PLAYER_HP;
 	private Animator anim;
-	private float atkCooldown = Config.PLAYER_ATTACK_SPEED;
+	private float atkCooldown = 0;
+	private int currentGun = 0
 
 	// Use this for initialization
 	void Start () {
@@ -17,45 +18,44 @@ public class PlayerController : MonoBehaviour {
 
 	void Update()
 	{
-		/*int degree = 0;
-		isMoving = false;
-*/
-		atkCooldown -= Time.deltaTime;
+		atkCooldown += Time.deltaTime;
 
 		Vector3 mouseLocation = Input.mousePosition;
 		anim.SetBool("isMoving", false);
 		transform.eulerAngles = new Vector3(0, MyUtils.calculatePlayerRotate(mouseLocation.x, mouseLocation.y, Screen.width, Screen.height), 0);
 
+		float vertMove = 0, horMove = 0;
+
 		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
 		{
 			anim.SetBool("isMoving", true);
-			GetComponent<Rigidbody> ().velocity = new Vector3 (10, 0, 10);
-			/*Vector3 a;
 			if(Input.GetKey(KeyCode.W))
-				a = new Vector3(transform.position.x, transform.position.y, transform.position.z + Config.PLAYER_MOVE_SPEED);
+				vertMove = Config.PLAYER_MOVE_SPEED;
 			else
-				a = new Vector3(transform.position.x, transform.position.y, transform.position.z - Config.PLAYER_MOVE_SPEED);
-			transform.position= a;*/
+				vertMove = - Config.PLAYER_MOVE_SPEED;
 		}
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
 		{
 			anim.SetBool("isMoving", true);
-			Vector3 a;
-			if(Input.GetKey(KeyCode.D))
-				a = new Vector3(transform.position.x + Config.PLAYER_MOVE_SPEED, transform.position.y, transform.position.z);
+			if (Input.GetKey (KeyCode.D))
+				horMove = Config.PLAYER_MOVE_SPEED;
 			else
-				a = new Vector3(transform.position.x - Config.PLAYER_MOVE_SPEED, transform.position.y, transform.position.z);
-			transform.position= a;
+				horMove = - Config.PLAYER_MOVE_SPEED;
 		}
+		if (Mathf.Abs (horMove) > 0 && Mathf.Abs (vertMove) > 0) {
+			horMove = horMove / Mathf.Sqrt (2);
+			vertMove = vertMove / Mathf.Sqrt (2);
+		}
+		GetComponent<Rigidbody> ().velocity = new Vector3 (horMove, 0, vertMove);
 
-		if (Input.GetMouseButton(0) && atkCooldown < 0)
+		if (Input.GetMouseButton(0) && atkCooldown > MyUtils.getAttackSpeedForGun(currentGun))
 		{
 			attack ();
 		}
 	}
 
 	private void attack(){
-		atkCooldown = Config.PLAYER_ATTACK_SPEED;
+		atkCooldown = 0;
 		Instantiate (bullet, bulletPosition.transform.position, Quaternion.identity);
 	}
 

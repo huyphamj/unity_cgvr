@@ -5,6 +5,7 @@ using UnityEngine;
 public class Skeleton : MonoBehaviour {
 	private Animator anim;
 	private PlayerController player;
+	private Rigidbody rigidbody;
 
 	private int hp = Config.SKELETON_HP;
 	private float attackTime = Config.SKELETON_ATTACK_TIME;
@@ -14,15 +15,11 @@ public class Skeleton : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		anim.SetBool(Constant.ZOMBIE_ANIM_WALKING, true);
 		player = FindObjectOfType<PlayerController>();
+		rigidbody = GetComponent<Rigidbody> ();
 	}
 
 	// Update is called once per frame
-	void Update(){
-		GetComponent<Rigidbody> ().velocity = new Vector3 (0, 0, 5);
-	}
-	//void Update () {
-	//	transform.Translate (a);
-		/*
+	void Update () {
 		if(anim.GetBool(Constant.ZOMBIE_ANIM_DEAD))
 			return;
 		attackTime -= Time.deltaTime;
@@ -33,11 +30,13 @@ public class Skeleton : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0, degree + 180, 0);
 
 		float distance = MyUtils.calculateDistance (this.transform.position, player.transform.position);
-		if (distance < Config.SKELETON_ATTACK_RANGE)
+		if (distance < Config.SKELETON_ATTACK_RANGE) {
+			rigidbody.velocity = new Vector3 (0, 0, 0);
 			attack ();
+		}
 		else
-			chasePlayer ();*/
-	//}
+			chasePlayer ();
+	}
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag.Equals("Bullet")) {
@@ -54,12 +53,13 @@ public class Skeleton : MonoBehaviour {
 	}
 
 	void chasePlayer(){
-		//swordCollider.enabled = false;
 		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
 		if (delayAfterAttack < 0) {
-			transform.Translate (new Vector3 (0, 0, -Config.SKELETON_MOVE_SPEED));
-		}
+			float deg = transform.eulerAngles.y + 180;
+			GetComponent<Rigidbody> ().velocity = new Vector3 (Mathf.Sin (deg * Mathf.Deg2Rad) * Config.SKELETON_MOVE_SPEED, 0, Mathf.Cos (deg * Mathf.Deg2Rad) * Config.SKELETON_MOVE_SPEED);
+		} else
+			delayAfterAttack -= Time.deltaTime;
 	}
 
 	void attack(){

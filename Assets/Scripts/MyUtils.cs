@@ -51,4 +51,20 @@ public class MyUtils{
 			return 2;
 		return 1;
 	}
+
+	public static float getAttackSpeedForGun(int gun){
+		int ret;
+		switch (gun) {
+		case 1:
+			ret = Config.BULLET_PISTOL_ATTACK_SPEED;
+			break;
+		case 2:
+			ret = Config.BULLET_SHORTGUN_ATTACK_SPEED;
+			break;
+		default:
+			ret = 0;
+			break;
+		}
+		return ret;
+	}
 }

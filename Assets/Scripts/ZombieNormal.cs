@@ -8,6 +8,7 @@ public class ZombieNormal : MonoBehaviour {
 
 	private Animator anim;
 	private PlayerController player;
+	private Rigidbody rigidbody;
 
 	private int hp = Config.ZOMBIE_NORMAL_HP;
 	private float attackTime = Config.ZOMBIE_NORMAL_ATTACK_TIME;
@@ -17,6 +18,7 @@ public class ZombieNormal : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		anim.SetBool(Constant.ZOMBIE_ANIM_WALKING, true);
 		player = FindObjectOfType<PlayerController>();
+		rigidbody = GetComponent<Rigidbody> ();
 	}
 	
 	// Update is called once per frame
@@ -31,8 +33,10 @@ public class ZombieNormal : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0, degree, 0);
 
 		float distance = MyUtils.calculateDistance (this.transform.position, player.transform.position);
-		if (distance < Config.ZOMBIE_NORMAL_ATTACK_RANGE)
+		if (distance < Config.ZOMBIE_NORMAL_ATTACK_RANGE) {
+			rigidbody.velocity = new Vector3 (0, 0, 0);
 			attack ();
+		}
 		else
 			chasePlayer ();
 	}
@@ -55,15 +59,17 @@ public class ZombieNormal : MonoBehaviour {
 		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
 		if (delayAfterAttack < 0) {
-			//transform.Translate (new Vector3 (0, 0, Config.ZOMBIE_MOVE_SPEED));
-			GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 10);
-		}
+			float deg = transform.eulerAngles.y;
+			GetComponent<Rigidbody> ().velocity = new Vector3 (Mathf.Sin (deg * Mathf.Deg2Rad) * Config.ZOMBIE_MOVE_SPEED, 0, Mathf.Cos (deg * Mathf.Deg2Rad) * Config.ZOMBIE_MOVE_SPEED);
+		} else
+			delayAfterAttack -= Time.deltaTime;
 	}
 
 	void attack(){
 		if (attackTime < 0) {
 			anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, false);
 			anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, true);
+
 			Quaternion q = transform.rotation;
 			Instantiate (zombieBullet, bulletPosion.position, q);
 

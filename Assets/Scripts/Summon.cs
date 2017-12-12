@@ -5,16 +5,17 @@ using UnityEngine;
 public class Summon : MonoBehaviour {
 	private Animator anim;
 	private PlayerController player;
+	private Rigidbody rigidbody;
 
 	private int hp = Config.SUMMON_HP;
 	private float attackTime = Config.SUMMON_ATTACK_TIME;
 	private float delayAfterAttack = Config.SUMMON_DELAY_AFTER_ATTACK;
-	private bool preventBlocking = false;
 
 	void Start () {
 		anim = GetComponent<Animator>();
 		anim.SetBool(Constant.ZOMBIE_ANIM_WALKING, true);
 		player = FindObjectOfType<PlayerController>();
+		rigidbody = GetComponent<Rigidbody> ();
 	}
 
 	// Update is called once per frame
@@ -30,8 +31,10 @@ public class Summon : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0, degree, 0);
 
 		float distance = MyUtils.calculateDistance (this.transform.position, player.transform.position);
-		if (distance < Config.SUMMON_ATTACK_RANGE)
+		if (distance < Config.SUMMON_ATTACK_RANGE) {
+			rigidbody.velocity = new Vector3 (0, 0, 0);
 			attack ();
+		}
 		else
 			chasePlayer ();
 	}
@@ -56,9 +59,10 @@ public class Summon : MonoBehaviour {
 		anim.SetBool (Constant.ZOMBIE_ANIM_WALKING, true);
 		anim.SetBool (Constant.ZOMBIE_ANIM_ATTACKING, false);
 		if (delayAfterAttack < 0) {
-			transform.Translate (new Vector3 (0, 0, Config.SUMMON_MOVE_SPEED));
-			//GetComponent<Rigidbody>().velocity = new Vector3(0, 0, Config.SUMMON_MOVE_SPEED);
-		}
+			float deg = transform.eulerAngles.y;
+			GetComponent<Rigidbody> ().velocity = new Vector3 (Mathf.Sin (deg * Mathf.Deg2Rad) * Config.SUMMON_MOVE_SPEED, 0, Mathf.Cos (deg * Mathf.Deg2Rad) * Config.SUMMON_MOVE_SPEED);
+		} else
+			delayAfterAttack -= Time.deltaTime;
 	}
 
 	void attack(){
@@ -71,7 +75,6 @@ public class Summon : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision other){
-		preventBlocking = true;
 	}
 
 	void DestroySummon(){
